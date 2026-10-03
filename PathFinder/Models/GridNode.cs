@@ -11,6 +11,7 @@ namespace PathFinder.Models
         public bool IsWall { get; set; }
         public double Cost { get; set; } = 1;
         public bool IsVisited { get; set; }
+        public bool shortest { get; set; }
         public GridNode? Parent { get; set; }
     }
 }

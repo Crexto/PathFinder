@@ -15,13 +15,13 @@
         <UniformGrid
             x:Name="GridContainer"
             Grid.Row="0"
-            Rows="25"
-            Columns="40"/>
+            Rows="{Binding ROWS}"
+            Columns="{Binding COLUMNS}"/>
 
-        <Button Margin="0 0 10 0" Width="100" Grid.Row="1" x:Name="BtnRun" Content="Run" VerticalAlignment="Center" HorizontalAlignment="Right"></Button>
-        <ComboBox Margin="0 0 120 0" Width="100" x:Name="CmbAlgo" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">
-            <ComboBoxItem>BFS</ComboBoxItem>
+        <Button Click="Run" Margin="0 0 10 0" Width="100" Grid.Row="1" x:Name="BtnRun" Content="Run" VerticalAlignment="Center" HorizontalAlignment="Right"></Button>
+        <ComboBox SelectedIndex="0" Margin="0 0 120 0" Width="100" x:Name="CmbAlgo" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">
             <ComboBoxItem>DFS</ComboBoxItem>
+            <ComboBoxItem>BFS</ComboBoxItem>
             <ComboBoxItem>A*</ComboBoxItem>
             <ComboBoxItem>Djistra</ComboBoxItem>
         </ComboBox>
