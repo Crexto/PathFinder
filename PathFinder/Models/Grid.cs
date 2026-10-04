@@ -3,13 +3,16 @@
     public class Grid
     {
         public GridNode[,] Nodes { get; set; }
-
+        public int Columns { get; set; }
+        public int Rows { get; set; }
         public GridNode? Start { get; set; }
         public GridNode? End { get; set; }
 
         public Grid(int rows, int columns)
         {
             Nodes = new GridNode[rows, columns];
+            Rows = rows;
+            Columns = columns;
 
             for (int row = 0; row < rows; row++)
             {

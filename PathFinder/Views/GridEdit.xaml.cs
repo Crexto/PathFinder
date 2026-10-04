@@ -1,6 +1,6 @@
-﻿using PathFinder.Algorithms;
-using PathFinder.Models;
-using System.Security.AccessControl;
+﻿using PathFinder.Models;
+using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,32 +9,34 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Xml.Linq;
 
-namespace PathFinder
+namespace PathFinder.Views
 {
-    public partial class MainWindow : Window
+    /// <summary>
+    /// Interaction logic for Window1.xaml
+    /// </summary>
+    public partial class GridEdit : Window
     {
-        private Models.Grid grid = new(ROWS, COLUMNS);
-        private DFS dfs = new();
-        private BFS bfs = new();
-        const int ROWS = 10; 
-        const int COLUMNS = 10;
-
-        public MainWindow()
+        public Models.Grid grid;
+        private int alg;
+        public GridEdit(Models.Grid maze, int algo)
         {
             InitializeComponent();
+            GridContainer.Rows = maze.Rows;
+            GridContainer.Columns = maze.Columns;
+            grid = maze;
+            alg = algo;
             load();
+            loadGrid();
         }
 
         private void load()
         {
             GridContainer.Children.Clear();
-            for (int row = 0; row < ROWS; row++)
+            for (int row = 0; row < grid.Rows; row++)
             {
-                for (int col = 0; col < COLUMNS; col++)
+                for (int col = 0; col < grid.Columns; col++)
                 {
                     Button cell = new Button();
 
@@ -57,11 +59,11 @@ namespace PathFinder
                 if (node.IsWall)
                 {
                     child.Background = Brushes.Black;
-                } 
-                else if (node == grid.Start) 
+                }
+                else if (node == grid.Start)
                 {
                     child.Background = Brushes.Green;
-                } 
+                }
                 else if (node == grid.End)
                 {
                     child.Background = Brushes.Red;
@@ -96,12 +98,12 @@ namespace PathFinder
             {
                 grid.End = null;
             }
-            else if (BtnNode.IsWall) 
+            else if (BtnNode.IsWall)
             {
                 BtnNode.IsWall = false;
                 grid.Nodes[BtnNode.Row, BtnNode.Column].IsWall = false;
                 grid.Start = BtnNode;
-            } 
+            }
             else
             {
                 BtnNode.IsWall = true;
@@ -112,39 +114,11 @@ namespace PathFinder
 
         }
 
-        private void shortestPathFinder(GridNode node)
+        private void BtnSave(object sender, RoutedEventArgs e)
         {
-            if (node != null)
-            {
-                while (node.Parent != null)
-                {
-                    node.shortest = true;
-                    node = node.Parent;
-                }
-            }
+            DialogResult = true;
         }
 
-        private void Run(object sender, RoutedEventArgs e)
-        {
-            if (grid.Start == null || grid.End == null)
-            {
-                MessageBox.Show("Start and end points must be available");
-                return;
-            }
 
-            switch (CmbAlgo.SelectedIndex)
-            {
-                case 0:
-                    shortestPathFinder(dfs.getPath(grid));
-                    loadGrid();
-                    break;
-                case 1:
-                    shortestPathFinder(bfs.getPath(grid));
-                    loadGrid();
-                    break;
-
-            }
-
-        }
     }
 }
